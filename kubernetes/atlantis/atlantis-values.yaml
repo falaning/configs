@@ -1,0 +1,11 @@
+atlantis:
+  allowedRepoNames:
+    - /.*/
+  dataStorage:
+    persistentVolume:
+      size: 10Gi
+  repoConfig:
+    secretName: atlantis-secrets 
+service:
+  type: LoadBalancer
+  port: 80
