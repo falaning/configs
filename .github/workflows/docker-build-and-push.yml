@@ -26,6 +26,6 @@ jobs:
           IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app_2
         run: |
           docker buildx build --platform linux/amd64 \
-          -t $IMAGE_NAME:latest \
+          -t my-nginx-app_2:latest \
           --push \
           .
