@@ -21,11 +21,12 @@ jobs:
           YCR_TOKEN: ${{ secrets.YCR_TOKEN }}
         run: echo $YCR_TOKEN | docker login cr.yandex -u oauth --password-stdin
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         env:
           IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app_2
-        run: |
-          docker buildx build --platform linux/amd64 \
-          -t my-nginx-app_2:latest \
-          --push \
-          .
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: Push Docker image
+        env:
+          IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app_2
+        run: docker push $IMAGE_NAME:latest
