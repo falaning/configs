@@ -24,5 +24,6 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
           IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app_2
         run: |
+          mkdir -p $HOME/.kube
           echo "$KUBE_CONFIG_DATA" | base64 --decode > $HOME/.kube/config
           kubectl set image deployment/my-nginx-app my-nginx-container=$IMAGE_NAME:latest
