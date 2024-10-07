@@ -30,4 +30,4 @@ jobs:
         env:
           IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app
         run: |
-          kubectl set image deployment/my-nginx-app my-nginx-container=$IMAGE_NAME:latest
+          kubectl set image deployment/my-nginx-app my-nginx-container=$IMAGE_NAME:latest --insecure-skip-tls-verify
