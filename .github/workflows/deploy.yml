@@ -19,11 +19,15 @@ jobs:
         with:
           version: v1.26.0
 
+      - name: Set up Kubernetes context
+        run: |
+          kubectl config set-cluster my-cluster --server=${{ secrets.KUBERNETES_SERVER }}
+          kubectl config set-credentials github-actions-sa --token=${{ secrets.KUBERNETES_TOKEN }}
+          kubectl config set-context default --cluster=my-cluster --user=github-actions-sa
+          kubectl config use-context default
+
       - name: Deploy to Kubernetes
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app_2
+          IMAGE_NAME: cr.yandex/${{ secrets.YCR_REPOSITORY }}/my-nginx-app
         run: |
-          mkdir -p $HOME/.kube
-          echo "$KUBE_CONFIG_DATA" | base64 --decode > $HOME/.kube/config
           kubectl set image deployment/my-nginx-app my-nginx-container=$IMAGE_NAME:latest
